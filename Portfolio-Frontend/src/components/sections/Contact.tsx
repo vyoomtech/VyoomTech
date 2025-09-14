@@ -17,6 +17,7 @@ const Contact = () => {
     email: "",
     company: "",
     service: "",
+    role: "",
     message: "",
   });
 
@@ -28,25 +29,25 @@ const Contact = () => {
     "Custom Development",
     "Consultation",
   ];
-  const role = [
-    "Technical Lead",
-    "Non-Technical Lead",
-  ];
+
+  const roles = ["Technical Lead", "Non-Technical Lead"];
 
   const contactInfo = [
     {
       icon: Mail,
       title: "Email Us",
       value: "vyoomtech@gmail.com",
-      href: "mailto:info@vyoomtech.com",
+      href: "mailto:vyoomtech@gmail.com",
       description: "Send us an email anytime",
+      itemProp: "email",
     },
     {
       icon: Phone,
       title: "Call Us",
       value: "+91 74703-79829",
-      href: "tel:+1234567890",
+      href: "tel:+917470379829",
       description: "Mon-Sat from 8am to 10pm",
+      itemProp: "telephone",
     },
     {
       icon: MapPin,
@@ -54,13 +55,13 @@ const Contact = () => {
       value: "Worldwide",
       href: "#",
       description: "We serve clients globally",
+      itemProp: "address",
     },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.name || !formData.email || !formData.message) {
       toast({
         title: "Please fill in all required fields",
@@ -69,18 +70,17 @@ const Contact = () => {
       return;
     }
 
-    // Simulate form submission
     toast({
       title: "Message sent successfully!",
       description: "We'll get back to you within 24 hours.",
     });
 
-    // Reset form
     setFormData({
       name: "",
       email: "",
       company: "",
       service: "",
+      role: "",
       message: "",
     });
   };
@@ -101,6 +101,8 @@ const Contact = () => {
       id="contact"
       className="py-12 bg-dark-section relative overflow-hidden"
       aria-labelledby="contact-heading"
+      itemScope
+      itemType="https://schema.org/ContactPage"
     >
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -110,7 +112,7 @@ const Contact = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <header className="text-center mb-16">
           <h2
             id="contact-heading"
             className="text-3xl md:text-5xl font-bold font-sora text-card-dark-foreground mb-6"
@@ -121,15 +123,15 @@ const Contact = () => {
             Ready to start your next project? Let's discuss how we can help
             bring your ideas to life.
           </p>
-        </div>
+        </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Contact Information */}
-          <div className="space-y-8">
+          <aside className="space-y-8" itemScope itemType="https://schema.org/Organization">
             {contactInfo.map((info, index) => {
               const Icon = info.icon;
               return (
-                <div
+                <article
                   key={info.title}
                   className="glass-card bg-card-dark/50 border border-white/10 hover:border-primary/30 transition-all duration-300 group"
                   style={{ animationDelay: `${index * 0.1}s` }}
@@ -145,15 +147,14 @@ const Contact = () => {
                       <a
                         href={info.href}
                         className="text-primary hover:text-primary-glow font-medium transition-colors duration-200"
+                        itemProp={info.itemProp}
                       >
                         {info.value}
                       </a>
-                      <p className="text-gray-400 text-sm mt-1">
-                        {info.description}
-                      </p>
+                      <p className="text-gray-400 text-sm mt-1">{info.description}</p>
                     </div>
                   </div>
-                </div>
+                </article>
               );
             })}
 
@@ -177,13 +178,15 @@ const Contact = () => {
                 Live Chat
               </Button>
             </div>
-          </div>
+          </aside>
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
             <form
               onSubmit={handleSubmit}
               className="glass-card bg-card-dark/50 border border-white/10"
+              itemScope
+              itemType="https://schema.org/ContactForm"
             >
               <h3 className="text-2xl font-bold font-sora text-card-dark-foreground mb-6">
                 Send us a Message
@@ -204,6 +207,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    aria-required="true"
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-card-dark-foreground placeholder-gray-400"
                     placeholder="Your full name"
                   />
@@ -223,6 +227,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    aria-required="true"
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-card-dark-foreground placeholder-gray-400"
                     placeholder="your@email.com"
                   />
@@ -274,22 +279,23 @@ const Contact = () => {
                     ))}
                   </select>
                 </div>
+
                 <div>
                   <label
-                    htmlFor="service"
+                    htmlFor="role"
                     className="block text-sm font-medium text-card-dark-foreground mb-2"
                   >
                     Role
                   </label>
                   <select
-                    id="service"
-                    name="service"
+                    id="role"
+                    name="role"
                     value={formData.role}
                     onChange={handleChange}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-card-dark-foreground"
                   >
                     <option value="">Select a role</option>
-                    {role.map((role) => (
+                    {roles.map((role) => (
                       <option
                         key={role}
                         value={role}
@@ -315,13 +321,20 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  aria-required="true"
                   rows={5}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-card-dark-foreground placeholder-gray-400 resize-none"
                   placeholder="Tell us about your project..."
                 />
               </div>
 
-              <Button type="submit" variant="hero" size="lg" className="w-full">
+              <Button
+                type="submit"
+                variant="hero"
+                size="lg"
+                className="w-full"
+                aria-label="Send your message"
+              >
                 Send Message
                 <Send className="ml-2 w-4 h-4" />
               </Button>

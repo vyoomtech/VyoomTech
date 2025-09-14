@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import {
   FaLaptopCode,
   FaMobileAlt,
@@ -50,18 +51,44 @@ const services = [
 
 const Services = () => {
   return (
-    <section id="services" className="py-20 relative overflow-hidden bg-black">
+    <section
+      id="services"
+      className="py-20 relative overflow-hidden bg-black"
+      aria-labelledby="services-heading"
+    >
+      {/* ✅ SEO Meta Tags */}
+      <Helmet>
+        <title>Our Services | Scalable Software & App Development</title>
+        <meta
+          name="description"
+          content="Explore our services: end-to-end software development, Android apps, Flutter apps, responsive websites, and AI/ML solutions to grow your business."
+        />
+        <meta
+          name="keywords"
+          content="software solutions, android app development, flutter apps, website development, AI, ML, digital solutions"
+        />
+        <meta property="og:title" content="Our Services | Software Solutions" />
+        <meta
+          property="og:description"
+          content="We provide end-to-end digital services including software, mobile apps, websites, and AI solutions."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-14">
-          <h2 className="text-5xl md:text-6xl font-extrabold mb-4 text-[#3b82f6]">
+        <header className="text-center mb-14">
+          <h2
+            id="services-heading"
+            className="text-5xl md:text-6xl font-extrabold mb-4 text-[#3b82f6]"
+          >
             Our Services
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
             From concept to execution, we design and build digital solutions
             that transform businesses and delight users.
           </p>
-        </div>
+        </header>
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -70,7 +97,7 @@ const Services = () => {
             const isHero = service.hero;
 
             return (
-              <motion.div
+              <motion.article
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -89,6 +116,8 @@ const Services = () => {
                       ? "bg-gradient-to-r from-blue-500 to-purple-600"
                       : "bg-gradient-to-r from-indigo-500 to-cyan-500"
                   }`}
+                  role="img"
+                  aria-label={service.title + " icon"}
                 >
                   <Icon className="text-white w-7 h-7" />
                 </div>
@@ -105,7 +134,7 @@ const Services = () => {
                 <p className="text-sm leading-relaxed whitespace-pre-line">
                   {service.description}
                 </p>
-              </motion.div>
+              </motion.article>
             );
           })}
         </div>

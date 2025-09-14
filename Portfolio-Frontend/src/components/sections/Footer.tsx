@@ -1,5 +1,7 @@
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, ArrowUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Mail, Phone, MapPin, ArrowUp } from "lucide-react"; 
+import { FaInstagram, FaLinkedin, FaXTwitter } from "react-icons/fa6"; 
+import { Button } from "@/components/ui/button"; 
+// Replaced Twitter with X
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -22,9 +24,9 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { name: "GitHub", icon: Github, href: "#", color: "hover:text-gray-900" }, // Adjusted hover color
-    { name: "LinkedIn", icon: Linkedin, href: "#", color: "hover:text-blue-600" }, // Adjusted hover color
-    { name: "Twitter", icon: Twitter, href: "#", color: "hover:text-sky-500" }, // Adjusted hover color
+    { name: "Instagram", icon: FaInstagram, href: "https://www.instagram.com/vyoomtech", color: "hover:text-pink-600" }, 
+    { name: "LinkedIn", icon: FaLinkedin, href: "https://www.linkedin.com/in/vyoom-tech-24a936383/", color: "hover:text-blue-600" }, 
+    { name: "X", icon: FaXTwitter, href: "https://www.x.com/vyoomtech", color: "hover:text-black" }, 
   ];
 
   const scrollToTop = () => {
@@ -32,69 +34,71 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white text-gray-700 relative overflow-hidden pt-16" role="contentinfo"> 
-      {/* Changed background and default text color */}
-
-      {/* Subtle background overlay/texture - adjust or remove if not suitable for white background */}
-      {/* If your pattern is dark, you might need to adjust its opacity or use a light pattern. */}
-      <div className="absolute inset-0 bg-[url('/path/to/subtle-light-pattern.png')] opacity-10" aria-hidden="true"></div> 
+    <footer 
+      className="bg-white text-gray-700 relative overflow-hidden pt-16" 
+      role="contentinfo"
+      itemScope 
+      itemType="https://schema.org/WPFooter"
+    > 
+      {/* Background Overlay */}
+      <div 
+        className="absolute inset-0 bg-[url('/path/to/subtle-light-pattern.png')] opacity-10" 
+        aria-hidden="true"
+      ></div> 
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content Grid */}
+        {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-y-12 gap-x-8 pb-16 border-b border-gray-200"> 
-          {/* Adjusted border color */}
 
-          {/* Company Info - Logo and Description */}
+          {/* Company Info */}
           <div className="lg:col-span-2 flex flex-col items-start">
-            <a href="#home" className="mb-6">
+            <a href="#home" className="mb-6" aria-label="Vyoom Tech Homepage">
               <img
                 src="/logo.png" 
-                alt="Vyoom Tech Logo"
+                alt="Vyoom Tech - Future-Ready Digital Solutions Logo"
                 className="h-12 w-auto object-contain" 
               />
             </a>
             
-            <p className="mb-6 leading-relaxed max-w-md text-gray-600"> 
-              {/* Adjusted text color */}
+            <p className="mb-6 leading-relaxed max-w-md text-gray-600" itemProp="description"> 
               Building Future-Ready Digital Solutions. We specialize in creating innovative mobile apps, 
               websites, and AI solutions that transform businesses and deliver exceptional user experiences.
             </p>
 
-            <div className="space-y-4">
+            <address className="not-italic space-y-4" itemScope itemType="https://schema.org/Organization">
               <div className="flex items-center text-gray-700">
                 <Mail className="w-5 h-5 mr-3 text-primary" /> 
-                {/* Adjusted icon color */}
-                <a href="mailto:info@vyoomtech.com" className="hover:text-primary transition-colors"> 
-                  {/* Adjusted hover color */}
-                  info@vyoomtech.com
+                <a 
+                  href="mailto:vyoomtech@gmail.com" 
+                  className="hover:text-primary transition-colors" 
+                  itemProp="email"
+                >
+                  vyoomtech@gmail.com
                 </a>
               </div>
               <div className="flex items-center text-gray-700">
                 <Phone className="w-5 h-5 mr-3 text-primary" /> 
-                {/* Adjusted icon color */}
-                <a href="tel:+1234567890" className="hover:text-primary transition-colors"> 
-                  {/* Adjusted hover color */}
-                  +1 (234) 567-8900
+                <a 
+                  href="tel:+917470379829" 
+                  className="hover:text-primary transition-colors" 
+                  itemProp="telephone"
+                >
+                  +91 74703 79829
                 </a>
               </div>
-              <div className="flex items-center text-gray-700">
+              <div className="flex items-center text-gray-700" itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
                 <MapPin className="w-5 h-5 mr-3 text-primary" /> 
-                {/* Adjusted icon color */}
-                <span>Global Services Available</span>
+                <span itemProp="addressLocality">Global Services Available</span>
               </div>
-            </div>
+            </address>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-bold font-sora text-gray-900 mb-6"> 
-              {/* Adjusted heading color */}
-              Quick Links
-            </h3>
+          <nav aria-label="Quick Links">
+            <h2 className="text-xl font-bold font-sora text-gray-900 mb-6">Quick Links</h2>
             <ul className="space-y-4">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  {/* Adjusted text and hover colors */}
                   <a 
                     href={link.href}
                     className="text-gray-600 hover:text-primary transition-colors duration-200 text-lg"
@@ -104,56 +108,47 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Services */}
-          <div>
-            <h3 className="text-xl font-bold font-sora text-gray-900 mb-6"> 
-              {/* Adjusted heading color */}
-              Services
-            </h3>
+          <section aria-label="Our Services">
+            <h2 className="text-xl font-bold font-sora text-gray-900 mb-6">Services</h2>
             <ul className="space-y-4">
               {services.map((service) => (
                 <li key={service}>
-                  <span className="text-gray-600 text-lg"> 
-                    {/* Adjusted text color */}
-                    {service}
-                  </span>
+                  <span className="text-gray-600 text-lg">{service}</span>
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
 
-          {/* Newsletter / Contact CTA */}
-          <div className="lg:col-span-1">
-            <h3 className="text-xl font-bold font-sora text-gray-900 mb-6"> 
-              {/* Adjusted heading color */}
-              Stay Connected
-            </h3>
-            <p className="text-gray-600 mb-6"> 
-              {/* Adjusted text color */}
-              Subscribe for updates or reach out for a consultation.
-            </p>
-            <form className="space-y-4">
+          {/* Newsletter */}
+          <section aria-label="Stay Connected">
+            <h2 className="text-xl font-bold font-sora text-gray-900 mb-6">Stay Connected</h2>
+            <p className="text-gray-600 mb-6">Subscribe for updates or reach out for a consultation.</p>
+            <form className="space-y-4" aria-label="Newsletter Subscription">
               <input
                 type="email"
                 placeholder="Your email address"
                 className="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary" 
-                // Adjusted input styling for white background
                 aria-label="Email address for newsletter"
+                required
               />
-              <Button variant="hero" className="w-full py-3 text-lg font-semibold">
+              <Button variant="hero" className="w-full py-3 text-lg font-semibold" aria-label="Subscribe to newsletter">
                 Subscribe
               </Button>
             </form>
-            <Button variant="outline" className="w-full mt-4 py-3 text-lg font-semibold text-primary border-primary hover:bg-primary hover:text-white"> 
-              {/* Adjusted colors for outline button */}
+            <Button 
+              variant="outline" 
+              className="w-full mt-4 py-3 text-lg font-semibold text-primary border-primary hover:bg-primary hover:text-white" 
+              aria-label="Book a call with Vyoom Tech"
+            >
               <Phone className="w-4 h-4 mr-2" /> Book a Call
             </Button>
-          </div>
+          </section>
         </div>
 
-        {/* Bottom Bar - Copyright and Social Links */}
+        {/* Bottom Bar */}
         <div className="py-8 flex flex-col md:flex-row items-center justify-between text-gray-500 text-sm">
           <div className="mb-4 md:mb-0">
             &copy; {currentYear} Vyoom Tech. All rights reserved.
@@ -167,9 +162,8 @@ const Footer = () => {
                   key={social.name}
                   href={social.href}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className={`text-gray-600 hover:text-primary transition-colors duration-300 ${social.color}`} 
-                  // Adjusted text and hover colors
                   aria-label={social.name}
                 >
                   <Icon className="w-6 h-6" />
@@ -191,7 +185,7 @@ const Footer = () => {
         <ArrowUp className="w-5 h-5" />
       </Button>
 
-      {/* Animation for Back to Top Button */}
+      {/* Animation for Back to Top */}
       <style jsx>{`
         @keyframes bounce-slow {
           0%, 100% {
