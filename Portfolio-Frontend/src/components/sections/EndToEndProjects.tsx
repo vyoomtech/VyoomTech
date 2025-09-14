@@ -1,76 +1,49 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { Sparkles, CheckCircle2, Award } from "lucide-react";
 import { motion, useAnimation } from "framer-motion";
 
-interface ProjectFeature {
-  icon: React.ElementType;
-  title: string;
-  description: string;
-}
-
 interface ProjectCardProps {
-  imageSrc: string;
-  imageAlt: string;
   title: string;
   tagline: string;
   description: string;
-  features: ProjectFeature[];
+  link?: string;
 }
 
 const GradientTextHeading: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => (
-  <h2
-    className="text-3xl md:text-5xl font-extrabold font-sora mb-6 leading-tight 
-               text-transparent bg-clip-text gradient-text"
-  >
+  <h2 className="text-3xl md:text-5xl font-extrabold font-sora mb-6 leading-tight text-transparent bg-clip-text gradient-text">
     {children}
   </h2>
 );
 
-const projectData = [
+const projectData: ProjectCardProps[] = [
   {
-    imageSrc:
-      "https://images.unsplash.com/photo-1556740758-94420824b010?q=80&w=2940&auto=format&fit=crop",
-    imageAlt: "E-commerce Platform Project",
-    title: "NextGen E-commerce Platform",
-    tagline: "Retail & Consumer Goods",
+    title: "Heystallers",
+    tagline: "Food Discovery",
     description:
-      "Robust and scalable e-commerce platform with seamless shopping and inventory management.",
-    features: [
-      { icon: CheckCircle2, title: "Intuitive UX", description: "Effortless navigation." },
-      { icon: Sparkles, title: "AI Recommendations", description: "Personalized suggestions." },
-      { icon: Award, title: "Scalable Cloud", description: "Resilient architecture." },
-    ],
+      "A food-first discovery platform that helps users find hidden gems, local food stalls, and trending dishes. Unlike traditional delivery apps, Heystallers focuses on food exploration, ratings, and authentic local experiences.",
+    link: "https://play.google.com/store/apps/details?id=com.appiwaystudios.heystallers&hl=en_IN",
   },
   {
-    imageSrc:
-      "https://images.unsplash.com/photo-1519389950473-47ba0fd0e158?q=80&w=2940&auto=format&fit=crop",
-    imageAlt: "FinTech Solution Project",
-    title: "Secure FinTech Portal",
-    tagline: "Financial Services",
+    title: "FlimaxAds",
+    tagline: "Smart Advertising",
     description:
-      "Secure and compliant portal for seamless transactions and data management.",
-    features: [
-      { icon: CheckCircle2, title: "Bank-Grade Security", description: "MFA & encryption." },
-      { icon: Sparkles, title: "Real-time Analytics", description: "Interactive dashboards." },
-      { icon: Award, title: "Compliance", description: "Industry standards adherence." },
-    ],
+      "A smart advertising solution designed for businesses to maximize their reach and engagement. FlimaxAds enables targeted campaigns, audience insights, and interactive ad formats, ensuring higher ROI for marketers.",
   },
   {
-    imageSrc:
-      "https://images.unsplash.com/photo-1521737711867-ee1d8841a4a6?q=80&w=2940&auto=format&fit=crop",
-    imageAlt: "Healthcare Management System",
-    title: "Digital Health Platform",
-    tagline: "Healthcare & Wellness",
+    title: "CampusWay",
+    tagline: "Campus Networking",
     description:
-      "Integrated platform to streamline patient management, appointments, and records.",
-    features: [
-      { icon: CheckCircle2, title: "Patient-Centric", description: "Easy access to health info." },
-      { icon: Sparkles, title: "Telemedicine", description: "Virtual consultations." },
-      { icon: Award, title: "HIPAA Compliant", description: "Secure patient data." },
-    ],
+      "A campus networking and management app built to connect students, clubs, and institutions in one ecosystem. From event management to community building, CampusWay fosters collaboration and enhances student life.",
+    link: "https://play.google.com/store/apps/details?id=com.appiwaystudio.campusway&hl=en_IN",
+  },
+  {
+    title: "Travault",
+    tagline: "Travel Companion",
+    description:
+      "A travel companion app that lets users save spots, explore hidden destinations, and plan trips effortlessly. With features like personal notes, galleries, and community tips, Travault makes travel smarter and more memorable.",
+    link: "https://travault-web.vercel.app/",
   },
 ];
 
@@ -98,7 +71,6 @@ const EndToEndProjects = () => {
   return (
     <section className="py-20 bg-gray-50 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 text-center">
-        {/* 🔹 Same gradient as About section */}
         <GradientTextHeading>From Vision to Reality</GradientTextHeading>
 
         <p className="text-base md:text-lg text-gray-700 max-w-2xl mx-auto mb-12">
@@ -122,40 +94,40 @@ const EndToEndProjects = () => {
               transition: { duration: 30, ease: "linear" },
             });
           }}
-          className="flex items-center gap-6 cursor-grab"
+          className="flex items-stretch gap-6 cursor-grab"
         >
           {projectData.concat(projectData).map((project, idx) => (
             <motion.div
               key={idx}
               whileHover={{
-                scale: 1.03,
+                scale: 1.04,
                 y: -5,
-                boxShadow: "0 15px 35px rgba(0,0,0,0.5)",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.6)",
               }}
-              className="w-72 flex-shrink-0 bg-card-dark/80 border border-white/10 shadow-lg rounded-2xl p-5 flex flex-col justify-between transition-all duration-300"
+              className="w-72 flex-shrink-0 bg-card-dark/90 border border-white/10 shadow-xl rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
             >
-              <img
-                src={project.imageSrc}
-                alt={project.imageAlt}
-                className="rounded-xl object-cover w-full h-44 shadow-md mb-3"
-              />
-              <span className="inline-block bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs font-medium px-3 py-1 rounded-full mb-2">
+              {/* tagline pill */}
+              <span className="inline-block gradient-text text-xs font-semibold px-3 py-1 rounded-full border border-white/20 mb-3">
                 {project.tagline}
               </span>
-              <h3 className="text-lg font-extrabold text-white mb-2">{project.title}</h3>
-              <p className="text-sm text-gray-300 mb-3 line-clamp-3">{project.description}</p>
 
-              <div className="space-y-1 text-left">
-                {project.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-start">
-                    <feature.icon className="w-4 h-4 text-blue-400 mr-2 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <h4 className="text-sm font-semibold text-white mb-0.5">{feature.title}</h4>
-                      <p className="text-xs text-gray-400">{feature.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <h3 className="text-lg font-extrabold text-white mb-3">{project.title}</h3>
+              
+              {/* Description with fixed height to keep uniform cards */}
+              <p className="text-sm text-gray-300 mb-5 line-clamp-6 min-h-[90px]">
+                {project.description}
+              </p>
+
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto text-blue-400 font-semibold text-sm hover:underline"
+                >
+                  View Project →
+                </a>
+              )}
             </motion.div>
           ))}
         </motion.div>
