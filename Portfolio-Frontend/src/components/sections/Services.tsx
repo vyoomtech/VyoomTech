@@ -103,19 +103,17 @@ const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className={`relative rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between ${
-                  isHero
+                className={`relative rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between ${isHero
                     ? "lg:col-span-2 p-8 bg-gradient-to-r from-purple-600 to-blue-600 text-white"
                     : "p-6 flex flex-col bg-white/10 backdrop-blur-md text-gray-200"
-                }`}
+                  }`}
               >
                 {/* Icon */}
                 <div
-                  className={`w-14 h-14 flex items-center justify-center rounded-xl mb-5 ${
-                    isHero
+                  className={`w-14 h-14 flex items-center justify-center rounded-xl mb-5 ${isHero
                       ? "bg-gradient-to-r from-blue-500 to-purple-600"
                       : "bg-gradient-to-r from-indigo-500 to-cyan-500"
-                  }`}
+                    }`}
                   role="img"
                   aria-label={service.title + " icon"}
                 >
@@ -124,9 +122,8 @@ const Services = () => {
 
                 {/* Text */}
                 <h3
-                  className={`font-bold ${
-                    isHero ? "text-2xl mb-4" : "text-xl mb-2"
-                  }`}
+                  className={`font-bold ${isHero ? "text-2xl mb-4" : "text-xl mb-2"
+                    }`}
                 >
                   {service.title}
                 </h3>
@@ -144,3 +141,156 @@ const Services = () => {
 };
 
 export default Services;
+
+
+
+
+// Firebase integrated
+// "use client";
+// import { useEffect, useState } from "react";
+// import { motion } from "framer-motion";
+// import { Helmet } from "react-helmet-async";
+
+// // ✅ Firebase imports
+// import { db } from "@/firebase";
+// import { collection, getDocs, orderBy, query } from "firebase/firestore";
+
+// interface Service {
+//   id: string;
+//   title: string;
+//   tagline: string;
+//   description: string;
+//   status: "active" | "coming-soon";
+//   imageUrl?: string;
+//   hero?: boolean;
+// }
+
+// const Services = () => {
+//   const [services, setServices] = useState<Service[]>([]);
+
+//   useEffect(() => {
+//     const fetchServices = async () => {
+//       try {
+//         const q = query(collection(db, "services"), orderBy("createdAt", "asc"));
+//         const querySnapshot = await getDocs(q);
+
+//         const data: Service[] = querySnapshot.docs.map((doc) => ({
+//           id: doc.id,
+//           ...doc.data(),
+//         })) as Service[];
+
+//         setServices(data);
+//       } catch (error) {
+//         console.error("Error fetching services:", error);
+//       }
+//     };
+
+//     fetchServices();
+//   }, []);
+
+//   return (
+//     <section
+//       id="services"
+//       className="py-20 relative overflow-hidden bg-black"
+//       aria-labelledby="services-heading"
+//     >
+//       {/* ✅ SEO Meta Tags */}
+//       <Helmet>
+//         <title>Our Services | Scalable Software & App Development</title>
+//         <meta
+//           name="description"
+//           content="Explore our services: end-to-end software development, Android apps, Flutter apps, responsive websites, and AI/ML solutions to grow your business."
+//         />
+//         <meta
+//           name="keywords"
+//           content="software solutions, android app development, flutter apps, website development, AI, ML, digital solutions"
+//         />
+//         <meta property="og:title" content="Our Services | Software Solutions" />
+//         <meta
+//           property="og:description"
+//           content="We provide end-to-end digital services including software, mobile apps, websites, and AI solutions."
+//         />
+//         <meta property="og:type" content="website" />
+//       </Helmet>
+
+//       <div className="relative z-10 max-w-7xl mx-auto px-6">
+//         {/* Section Header */}
+//         <header className="text-center mb-14">
+//           <h2
+//             id="services-heading"
+//             className="text-5xl md:text-6xl font-extrabold mb-4 text-[#3b82f6]"
+//           >
+//             Our Services
+//           </h2>
+//           <p className="text-gray-300 max-w-2xl mx-auto">
+//             From concept to execution, we design and build digital solutions
+//             that transform businesses and delight users.
+//           </p>
+//         </header>
+
+//         {/* Grid Layout */}
+//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+//           {services.map((service, index) => {
+//             const isHero = service.hero;
+
+//             return (
+//               <motion.article
+//                 key={service.id}
+//                 initial={{ opacity: 0, y: 50 }}
+//                 whileInView={{ opacity: 1, y: 0 }}
+//                 viewport={{ once: true }}
+//                 transition={{ duration: 0.6, ease: "easeOut" }}
+//                 className={`relative rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between ${isHero
+//                     ? "lg:col-span-2 p-8 bg-gradient-to-r from-purple-600 to-blue-600 text-white"
+//                     : "p-6 flex flex-col bg-white/10 backdrop-blur-md text-gray-200"
+//                   }`}
+//               >
+//                 {/* Icon / Image */}
+//                 {service.imageUrl ? (
+//                   <div
+//                     className={`w-14 h-14 flex items-center justify-center rounded-xl mb-5 overflow-hidden ${isHero
+//                         ? "bg-gradient-to-r from-blue-500 to-purple-600"
+//                         : "bg-gradient-to-r from-indigo-500 to-cyan-500"
+//                       }`}
+//                   >
+//                     <img
+//                       src={service.imageUrl}
+//                       alt={service.title}
+//                       className="w-7 h-7 object-contain"
+//                     />
+//                   </div>
+//                 ) : (
+//                   <div
+//                     className={`w-14 h-14 flex items-center justify-center rounded-xl mb-5 ${isHero
+//                         ? "bg-gradient-to-r from-blue-500 to-purple-600"
+//                         : "bg-gradient-to-r from-indigo-500 to-cyan-500"
+//                       }`}
+//                   >
+//                     {/* fallback: first letter */}
+//                     <span className="text-white font-bold text-lg">
+//                       {service.title.charAt(0)}
+//                     </span>
+//                   </div>
+//                 )}
+
+//                 {/* Text */}
+//                 <h3
+//                   className={`font-bold ${isHero ? "text-2xl mb-4" : "text-xl mb-2"
+//                     }`}
+//                 >
+//                   {service.title}
+//                 </h3>
+//                 <p className="text-sm italic mb-3">{service.tagline}</p>
+//                 <p className="text-sm leading-relaxed whitespace-pre-line">
+//                   {service.description}
+//                 </p>
+//               </motion.article>
+//             );
+//           })}
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default Services;

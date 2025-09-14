@@ -1,3 +1,5 @@
+
+
 import { useState } from "react";
 import {
   Mail,
@@ -9,6 +11,10 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+
+// ✅ Firebase imports
+import { db } from "@/firebase"; // <-- make sure firebase.ts is configured
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -59,30 +65,83 @@ const Contact = () => {
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    //   if (!formData.name || !formData.email || !formData.message) {
+    //     toast({
+    //       title: "Please fill in all required fields",
+    //       variant: "destructive",
+    //     });
+    //     return;
+    //   }
+
+    //   try {
+    //     // ✅ Save form data to Firestore
+    //     await addDoc(collection(db, "contacts"), {
+    //       ...formData,
+    //       createdAt: serverTimestamp(),
+    //     });
+
+    //     toast({
+    //       title: "Message sent successfully!",
+    //       description: "We'll get back to you within 24 hours.",
+    //     });
+
+    //     // Reset form
+    //     setFormData({
+    //       name: "",
+    //       email: "",
+    //       company: "",
+    //       service: "",
+    //       role: "",
+    //       message: "",
+    //     });
+    //   } catch (error) {
+    //     console.error("Error adding document: ", error);
+    //     toast({
+    //       title: "Something went wrong!",
+    //       description: "Please try again later.",
+    //       variant: "destructive",
+    //     });
+    //   }
     if (!formData.name || !formData.email || !formData.message) {
       toast({
         title: "Please fill in all required fields",
-        variant: "destructive",
+        variant: "destructive", // 🔴 red error toast
       });
       return;
     }
 
-    toast({
-      title: "Message sent successfully!",
-      description: "We'll get back to you within 24 hours.",
-    });
+    try {
+      await addDoc(collection(db, "contacts"), {
+        ...formData,
+        createdAt: serverTimestamp(),
+      });
 
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      service: "",
-      role: "",
-      message: "",
-    });
+      toast({
+        title: "Message sent successfully!",
+        description: "We'll get back to you within 24 hours.",
+        className: "bg-[#3454D1] text-white", // ✅ blue background with white text
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        service: "",
+        role: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      toast({
+        title: "Something went wrong!",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
+
   };
 
   const handleChange = (
@@ -127,7 +186,11 @@ const Contact = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Contact Information */}
-          <aside className="space-y-8" itemScope itemType="https://schema.org/Organization">
+          <aside
+            className="space-y-8"
+            itemScope
+            itemType="https://schema.org/Organization"
+          >
             {contactInfo.map((info, index) => {
               const Icon = info.icon;
               return (
@@ -151,7 +214,9 @@ const Contact = () => {
                       >
                         {info.value}
                       </a>
-                      <p className="text-gray-400 text-sm mt-1">{info.description}</p>
+                      <p className="text-gray-400 text-sm mt-1">
+                        {info.description}
+                      </p>
                     </div>
                   </div>
                 </article>
