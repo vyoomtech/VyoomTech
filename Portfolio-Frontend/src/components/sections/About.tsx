@@ -31,14 +31,14 @@ const About = () => {
   const stats = [
     {
       icon: Users,
-      value: "25+",
+      value: "5+",
       label: "Happy Clients",
       color: "text-blue-500",
     },
     {
       icon: Award,
-      value: "50+",
-      label: "Projects Completed",
+      value: "10+",
+      label: "Projects Delivered",
       color: "text-green-500",
     },
     {
@@ -49,7 +49,7 @@ const About = () => {
     },
     {
       icon: Target,
-      value: "10+",
+      value: "2+",
       label: "Countries Served",
       color: "text-orange-500",
     },
